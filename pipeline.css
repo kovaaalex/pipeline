@@ -21,6 +21,36 @@ body{
 }
 .head{
     background-color: #f5f5f6;
+    display: flex;
+    justify-content: space-between;
+}
+.head h3{
+    padding: 10px;
+}
+.close-button {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    cursor: pointer;
+}
+
+.close-button:before, .close-button:after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 15px;
+    background-color: #333;
+    top: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.close-button:before {
+    transform: rotate(45deg);
+}
+
+.close-button:after {
+    transform: rotate(-45deg);
 }
 .form__container{
     display: grid;
@@ -59,4 +89,33 @@ input,textarea {
 .form__group input[type="tel"] {
     display: inline-block;
     width: 40%;
+}
+.form__action{
+    display: flex;
+    justify-content: center;
+}
+button{
+    margin: 0 20px;
+    padding: 10px 17px;
+    border-radius: 20px;
+    border: none;
+    font-size: 18px;
+}
+button:hover{
+    cursor: pointer;
+}
+.btn__create {
+    background-color: #b2a034;
+    color: #000;
+    font-weight: 900;
+}
+.btn__create:hover {
+    background-color: #b6a034;
+}
+.btn__save {
+    background-color: #6c757d;
+    color: #fff;
+}
+.btn__save:hover {
+    background-color: #5a6268;
 }
