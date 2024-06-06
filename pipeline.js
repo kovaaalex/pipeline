@@ -1,33 +1,24 @@
-document.getElementById('dealForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+fetch('https://api.pipedrive.com/v1/persons?api_token=038f7961f6ec8877beb2b42e03903d148f877387')
+  .then(response => response.json())
+  .then(data => {
+    // Проверяем, что запрос был успешным и данные присутствуют
+    if (data.success && data.data && data.data.length > 0) {
+      // Получаем первый элемент из массива data
+      const firstPerson = data.data[0];
+      // Получаем email из объекта owner_id
+      const email = firstPerson.owner_id.email;
+      console.log('Email:', email);
 
-    const apiKey = 'c0971b58e32aed5317e32f7270345e969e250b08';  
-    const title = document.getElementById('title').value;
-    const value = document.getElementById('value').value;
-    const currency = document.getElementById('currency').value;
+      // Автоматически заполняем поле email на странице, если оно существует
+      const emailInput = document.querySelector('input[type="email"]');
+      if (emailInput) {
+        emailInput.value = email;
+      } else {
+        console.error('Поле email не найдено на странице.');
+      }
+    } else {
+      console.error('Данные о клиентах не найдены или запрос не был успешным.');
+    }
+  })
+  .catch(error => console.error('Ошибка получения данных:', error));
 
-    const dealData = {
-        title: title,
-        value: value,
-        currency: currency
-    };
-
-    fetch(`https://api.pipedrive.com/v1/deals?api_token=${apiKey}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dealData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            document.getElementById('response').innerText = 'Deal created successfully!';
-        } else {
-            document.getElementById('response').innerText = 'Error creating deal: ' + data.error;
-        }
-    })
-    .catch(error => {
-        document.getElementById('response').innerText = 'Error: ' + error.message;
-    });
-});
